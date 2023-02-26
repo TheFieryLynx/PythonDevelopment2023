@@ -8,7 +8,17 @@ import random
 from io import StringIO
 import cowsay
 
-cow = cowsay.get_random_cow()
+cow = cowsay.read_dot_cow(StringIO("""
+$the_cow = <<EOC;
+
+         $thoughts
+          $thoughts
+
+	 (\__/)
+	 (•ㅅ•)
+	と    づ
+EOC
+"""))
 
 dictionary = []
 
@@ -21,7 +31,7 @@ def chooseRandomWord(lst):
 def custom_cowprint(msg):
 	print(cowsay.cowsay(
 		msg.strip(),
-		cow=cow
+		cowfile=cow
 	))
 
 parser = argparse.ArgumentParser(
