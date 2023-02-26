@@ -33,12 +33,26 @@ parser.add_argument(
 	nargs = "?"
 )
 
+def ask(prompt: str, valid: list[str] = None) -> str:
+	print(prompt)
+	if valid == None:
+		inp = input()
+	else:
+		inp = input()
+		while inp not in valid:
+			print(prompt)
+			inp = input()
+	return inp
+
+def inform(format_string: str, bulls: int, cows: int) -> None:
+	None
+
 def gameplay(ask: callable, inform: callable, words: list[str]) -> int:
 	secret = chooseRandomWord(words)
 	guess = ''
 	cnt_ask = 0
 	while guess != secret:
-#		ask()
+		inp = ask("Введите слово: ") # ask("Введите слово: ", words) - more interesting with random words :)
 		cnt_ask += 1
 #		bullscows()
 #		inform()
@@ -59,3 +73,4 @@ except:
 		print(f"Path / URL {args.dict} is not valid")
 		exit(0)
 		
+print(gameplay(ask, inform, dictionary))
