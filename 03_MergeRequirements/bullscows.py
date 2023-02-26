@@ -5,6 +5,11 @@ import sys
 import urllib.request
 import random
 
+from io import StringIO
+import cowsay
+
+cow = cowsay.get_random_cow()
+
 dictionary = []
 
 def dictFilter(l, lst):
@@ -12,6 +17,12 @@ def dictFilter(l, lst):
 
 def chooseRandomWord(lst):
 	return lst[random.randint(0, len(lst) - 1)]
+
+def custom_cowprint(msg):
+	print(cowsay.cowsay(
+		msg.strip(),
+		cow=cow
+	))
 
 parser = argparse.ArgumentParser(
 	prog = "Bulls and cows",
@@ -36,21 +47,21 @@ parser.add_argument(
 args = parser.parse_args()
 
 def ask(prompt: str, valid: list[str] = None) -> str:
-	print(prompt)
+	custom_cowprint(prompt)
 	if valid == None:
 		inp = input()
 		while len(inp) != args.length:
-			print(prompt)
+			custom_cowprint(prompt)
 			inp = input()
 	else:
 		inp = input()
 		while inp not in valid:
-			print(prompt)
+			custom_cowprint(prompt)
 			inp = input()
 	return inp
 
 def inform(format_string: str, bulls: int, cows: int) -> None:
-	print(format_string.format(bulls, cows))
+	custom_cowprint(format_string.format(bulls, cows))
 	
 def bullscows(guess: str, secret: str) -> (int, int):
 	bulls, cows = 0, 0
