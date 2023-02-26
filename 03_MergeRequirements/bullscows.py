@@ -50,7 +50,7 @@ def ask(prompt: str, valid: list[str] = None) -> str:
 	return inp
 
 def inform(format_string: str, bulls: int, cows: int) -> None:
-	None
+	print(format_string.format(bulls, cows))
 	
 def bullscows(guess: str, secret: str) -> (int, int):
 	bulls, cows = 0, 0
@@ -75,8 +75,7 @@ def gameplay(ask: callable, inform: callable, words: list[str]) -> int:
 		guess = ask("Введите слово: ") # ask("Введите слово: ", words) - more interesting with random words :)
 		cnt_ask += 1
 		bulls, cows = bullscows(guess, secret)
-#		inform()
-		break # tmp
+		inform("Быки: {}, Коровы: {}", bulls, cows)
 	return cnt_ask
 
 try: 
