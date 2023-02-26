@@ -54,12 +54,17 @@ def inform(format_string: str, bulls: int, cows: int) -> None:
 	
 def bullscows(guess: str, secret: str) -> (int, int):
 	bulls, cows = 0, 0
+	bulls_positions = [0 for i in range(len(guess))]
 	for i in range(len(guess)):
 		if guess[i] == secret[i]:
 			bulls += 1
-		else:
-			if guess[i] in secret:
-				cows += 1
+			bulls_positions[i] = 1
+	for i in range(len(guess)):
+		if guess[i] != secret[i]:
+			for j in range(len(bulls_positions)):
+				if bulls_positions[j] != 1 and guess[i] == secret[j]:
+					cows += 1
+					bulls_positions[j] = 1
 	return bulls, cows
 
 def gameplay(ask: callable, inform: callable, words: list[str]) -> int:
