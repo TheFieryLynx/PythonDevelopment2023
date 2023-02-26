@@ -11,7 +11,7 @@ def dictFilter(l, lst):
 	return list(filter(lambda x: len(x) == l, lst))
 
 def chooseRandomWord(lst):
-	return lst[random.randint(0, len(lst))]
+	return lst[random.randint(0, len(lst) - 1)]
 
 parser = argparse.ArgumentParser(
 	prog = "Bulls and cows",
