@@ -3,14 +3,19 @@
 import argparse
 import sys
 import urllib.request
+import random
+
+dictionary = []
 
 def dictFilter(l, lst):
 	return list(filter(lambda x: len(x) == l, lst))
 
+def chooseRandomWord(lst):
+	return lst[random.randint(0, len(lst))]
+
 parser = argparse.ArgumentParser(
 	prog = "Bulls and cows",
 	description = "03 task",
-	formatter_class=argparse.ArgumentDefaultsHelpFormatter,
 )
 
 parser.add_argument(
@@ -28,10 +33,20 @@ parser.add_argument(
 	nargs = "?"
 )
 
+def gameplay(ask: callable, inform: callable, words: list[str]) -> int:
+	secret = chooseRandomWord(words)
+	guess = ''
+	cnt_ask = 0
+	while guess != secret:
+#		ask()
+		cnt_ask += 1
+#		bullscows()
+#		inform()
+		break # tmp
+	return cnt_ask
+
 args = parser.parse_args()
 print(args)
-
-dictionary = []
 
 try: 
 	with open(args.dict, "r") as f:
@@ -43,3 +58,4 @@ except:
 	except:
 		print(f"Path / URL {args.dict} is not valid")
 		exit(0)
+		
