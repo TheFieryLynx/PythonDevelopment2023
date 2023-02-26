@@ -33,10 +33,15 @@ parser.add_argument(
 	nargs = "?"
 )
 
+args = parser.parse_args()
+
 def ask(prompt: str, valid: list[str] = None) -> str:
 	print(prompt)
 	if valid == None:
 		inp = input()
+		while len(inp) != args.length:
+			print(prompt)
+			inp = input()
 	else:
 		inp = input()
 		while inp not in valid:
@@ -58,9 +63,6 @@ def gameplay(ask: callable, inform: callable, words: list[str]) -> int:
 #		inform()
 		break # tmp
 	return cnt_ask
-
-args = parser.parse_args()
-print(args)
 
 try: 
 	with open(args.dict, "r") as f:
