@@ -51,15 +51,25 @@ def ask(prompt: str, valid: list[str] = None) -> str:
 
 def inform(format_string: str, bulls: int, cows: int) -> None:
 	None
+	
+def bullscows(guess: str, secret: str) -> (int, int):
+	bulls, cows = 0, 0
+	for i in range(len(guess)):
+		if guess[i] == secret[i]:
+			bulls += 1
+		else:
+			if guess[i] in secret:
+				cows += 1
+	return bulls, cows
 
 def gameplay(ask: callable, inform: callable, words: list[str]) -> int:
 	secret = chooseRandomWord(words)
 	guess = ''
 	cnt_ask = 0
 	while guess != secret:
-		inp = ask("Введите слово: ") # ask("Введите слово: ", words) - more interesting with random words :)
+		guess = ask("Введите слово: ") # ask("Введите слово: ", words) - more interesting with random words :)
 		cnt_ask += 1
-#		bullscows()
+		bulls, cows = bullscows(guess, secret)
 #		inform()
 		break # tmp
 	return cnt_ask
