@@ -1,6 +1,7 @@
 import cmd
 import shlex
 import cowsay
+import readline
 from dataclasses import dataclass
 
 @dataclass
@@ -60,6 +61,14 @@ class Commandline(cmd.Cmd):
             wrap_text, width, brackets = args
         print(cowsay.make_bubble(text, wrap_text = wrap_text, width = int(width), brackets = THOUGHT_OPTIONS[brackets]))
 
+    def complete_make_bubble(self, text, line, begidx, endidx):
+        args = shlex.split(line)
+        wrap_text_list = ['True', 'False', 'true', 'false']
+        if len(args) == 2 and line[-1] == ' ':
+            return [i for i in wrap_text_list]
+        if len(args) == 3 and line[-1] != ' ':
+            return [i for i in filter(lambda x : x.startswith(args[2]), wrap_text_list)]
+
     def do_cowsay(self, arg):
         '''
         Similar to the cowsay command. Parameters are listed with their
@@ -83,6 +92,23 @@ class Commandline(cmd.Cmd):
         elif len(args) == 3:
             cow, eyes, tongue = args
         print(cowsay.cowsay(text, cow = cow, eyes = eyes, tongue = tongue))
+
+    def complete_cowsay(self, text, line, begidx, endidx):
+        args = shlex.split(line)
+        eyes_list = ['Oo', 'oO', '**', '**', '<>', '>>', '<<']
+        toungue_list = [';', '0', 'l', '|']
+        if len(args) == 2 and line[-1] == ' ':
+            return [i for i in cowsay.list_cows()]
+        if len(args) == 3 and line[-1] != ' ':
+            return [i for i in filter(lambda x : x.startswith(args[2]), cowsay.list_cows())]
+        if len(args) == 3 and line[-1] == ' ':
+            return [i for i in eyes_list]
+        if len(args) == 4 and line[-1] != ' ':
+            return [i for i in filter(lambda x : x.startswith(args[3]), eyes_list)]
+        if len(args) == 4 and line[-1] == ' ':
+            return [i for i in toungue_list]
+        if len(args) == 5 and line[-1] != ' ':
+            return [i for i in filter(lambda x : x.startswith(args[4]), toungue_list)]
 
     def do_cowthink(self, arg):
         '''
@@ -108,7 +134,22 @@ class Commandline(cmd.Cmd):
             cow, eyes, tongue = args
         print(cowsay.cowthink(text, cow = cow, eyes = eyes, tongue = tongue))
 
-    
+    def complete_cowthink(self, text, line, begidx, endidx):
+        args = shlex.split(line)
+        eyes_list = ['Oo', 'oO', '**', '**', '<>', '>>', '<<']
+        toungue_list = [';', '0', 'l', '|']
+        if len(args) == 2 and line[-1] == ' ':
+            return [i for i in cowsay.list_cows()]
+        if len(args) == 3 and line[-1] != ' ':
+            return [i for i in filter(lambda x : x.startswith(args[2]), cowsay.list_cows())]
+        if len(args) == 3 and line[-1] == ' ':
+            return [i for i in eyes_list]
+        if len(args) == 4 and line[-1] != ' ':
+            return [i for i in filter(lambda x : x.startswith(args[3]), eyes_list)]
+        if len(args) == 4 and line[-1] == ' ':
+            return [i for i in toungue_list]
+        if len(args) == 5 and line[-1] != ' ':
+            return [i for i in filter(lambda x : x.startswith(args[4]), toungue_list)]
 
 
 if __name__ == '__main__':
